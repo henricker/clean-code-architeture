@@ -1,6 +1,11 @@
 import { Encrypter } from "../../protocols/encrypter"
 import { DbAddAccount } from "./db-add-account"
 
+interface SutType {
+  sut: DbAddAccount
+  encrypterStub: Encrypter
+}
+
 const makeEncrypterStub = (): Encrypter => {
   class EncrypterStub implements Encrypter {
     async encrypt(validPassword: string): Promise<string> {
@@ -10,7 +15,7 @@ const makeEncrypterStub = (): Encrypter => {
 
   return new EncrypterStub()
 }
-const makeSut = () => {
+const makeSut = (): SutType => {
   const encrypterStub = makeEncrypterStub()
   const sut = new DbAddAccount(encrypterStub)
   
@@ -20,6 +25,7 @@ const makeSut = () => {
   }
 }
 describe('DbAddAccount UseCase', () => {
+  
   it('should call encrypter with correct password', async () => {
     const { sut, encrypterStub } = makeSut()
     const accountData = {
