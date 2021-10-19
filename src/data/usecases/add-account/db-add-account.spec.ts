@@ -88,6 +88,20 @@ describe('DbAddAccount UseCase', () => {
       email: 'valid@email.com',
       name: 'valid_name',
       password: 'hashed_password'
-    })
+    })  
+  })
+
+  it('should throw if Encrypter throws', async () => {
+    const { sut, addAccountRepositoryStub } = makeSut()
+    const accountData = {
+      name: 'valid_name',
+      email: 'valid_email',
+      password: 'valid_password'
+    }
+
+    jest.spyOn(addAccountRepositoryStub, 'add').mockRejectedValueOnce(new Error())
+
+    const promise = sut.add(accountData)
+    expect(promise).rejects.toThrow()
   })
 })
