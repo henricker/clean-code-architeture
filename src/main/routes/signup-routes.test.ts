@@ -1,11 +1,12 @@
 import request from 'supertest'
 import { MongoHelper } from '../../infra/db/mongodb/helpers/mongo-helper'
 import app from '../config/app'
+import env from '../config/env'
 
 describe('SignUp Routes', () => {
   
   beforeAll(async () => {
-    await MongoHelper.connect(process.env.MONGO_URL)
+    await MongoHelper.connect(env.mongoUrl)
   })
 
   afterAll(async () => {
@@ -17,7 +18,7 @@ describe('SignUp Routes', () => {
     await accountCollection.deleteMany({})
   })
 
-  it('should return an account', async () => {  
+  it('should return an account', async () => {
     const response = await request(app)
       .post('/api/signup')
       .send({
@@ -28,5 +29,6 @@ describe('SignUp Routes', () => {
       })
       .expect(200)
   
+    console.log(response.body)
   })
 })
