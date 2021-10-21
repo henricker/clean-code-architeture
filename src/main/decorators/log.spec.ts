@@ -35,6 +35,7 @@ const makesut = (): ISutType => {
 }
 
 describe('LogController Decorator', () => {
+  
   it('should call controller handle', async () => {
     const { sut, controllerStub } = makesut()
     const httpRequest: HttpRequest = {
@@ -51,4 +52,29 @@ describe('LogController Decorator', () => {
 
     expect(handleSpy).toBeCalledWith(httpRequest)
   })
+
+  it('should call controller handle', async () => {
+    const { sut } = makesut()
+    const httpRequest: HttpRequest = {
+      body: {
+        name: 'any name',
+        email: 'any mail',
+        password: 'any password',
+        passwordConfirmation: 'any password'
+      }
+    }
+
+    const httpResponse = await sut.handle(httpRequest)
+
+    expect(httpResponse).toEqual({
+      body: {
+        name: 'any name',
+        email: 'any mail',
+        password: 'any password',
+        passwordConfirmation: 'any password'
+      }, 
+      statusCode: 200
+    })
+  })
+
 })
