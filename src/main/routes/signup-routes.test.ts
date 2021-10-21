@@ -14,7 +14,7 @@ describe('SignUp Routes', () => {
   })
 
   beforeEach(async () => {
-    const accountCollection = MongoHelper.getCollection('accounts')
+    const accountCollection = await MongoHelper.getCollection('accounts')
     await accountCollection.deleteMany({})
   })
 
@@ -28,7 +28,6 @@ describe('SignUp Routes', () => {
         passwordConfirmation: 'MyHardPassword12301293012398@@@@1!2371739'
       })
       .expect(200)
-  
-    console.log(response.body)
+
   })
 })
