@@ -20,6 +20,7 @@ const makeSut = (): ISutType => {
 }
 
 describe('Login Controller', () => {
+  
   it('should return 400 if no email is provided', async () => {
     const { sut } = makeSut()
 
@@ -31,5 +32,18 @@ describe('Login Controller', () => {
 
     const httpResponse = await sut.handle(httpRequest)
     expect(httpResponse).toEqual(badRequest(new MissingParamError('email')))
+  })
+
+  it('should return 400 if no email is provided', async () => {
+    const { sut } = makeSut()
+
+    const httpRequest: HttpRequest = {
+      body: {
+        email: 'any_email'
+      }
+    }
+
+    const httpResponse = await sut.handle(httpRequest)
+    expect(httpResponse).toEqual(badRequest(new MissingParamError('password')))
   })
 })
