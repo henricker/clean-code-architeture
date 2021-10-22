@@ -71,7 +71,7 @@ describe('DbAddAccount UseCase', () => {
     const addSpy = jest.spyOn(addAccountRepositoryStub, 'add')
     await sut.add(makeFakeAccountData())
     expect(addSpy).toHaveBeenCalledWith({
-      email: 'valid@email.com',
+      email: 'valid_email',
       name: 'valid_name',
       password: 'hashed_password'
     })  

@@ -184,9 +184,9 @@ describe('SignUp Controller', () => {
 
     await sut.handle(makeFakeRequest())
     expect(addSpy).toHaveBeenCalledWith({
-      name: 'any_name',
-      email: 'any_email',
-      password: 'any_password',
+      email: "valid_email@email.com",
+      name: "valid_name",
+      password: "valid_password"
     })
   })
   
