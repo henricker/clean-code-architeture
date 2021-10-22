@@ -20,4 +20,11 @@ describe('RequiredFieldsValidation', () => {
     const error = sut.validate(mockInput)
     expect(error).toEqual(new MissingParamError('fieldName'))
   })
+
+  it('should return null if fieldName exists on input', () => {
+    const { sut } = makeSut()
+    const mockInput = { fieldName: 'fieldValue' }
+    const error = sut.validate(mockInput)
+    expect(error).toBeFalsy()
+  })
 })
