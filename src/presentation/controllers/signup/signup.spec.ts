@@ -6,8 +6,9 @@ import {
   HttpRequest, 
   } from './signup-protocols'
 import { ServerError } from '../../errors/server-error'
-import { ok, serverError } from '../../helpers/http/http-helper'
+import { badRequest, ok, serverError } from '../../helpers/http/http-helper'
 import { Validation } from '../../protocols/validation'
+import { MissingParamError } from '../../errors'
 
 interface SutTypes {
   sut: SignUpController
@@ -43,8 +44,8 @@ const makeAddAccount = (): AddAccount => {
 
 const makeValidationStub = (): Validation => {
   class ValidationStub implements Validation {
-    error: Error = null
-    input: any 
+    public error: Error = null
+    public input: any 
 
     validate(input: any): Error {
       this.input = input
@@ -74,6 +75,15 @@ describe('SignUp Controller', () => {
     await sut.handle(request)
 
     expect(validateSpy).toHaveBeenCalledWith(request.body)
+  })
+
+  it('should return 400 if Validation returns an error', async () => {
+    const { sut, validationStub  } = makeSut()
+    const request = makeFakeRequest()
+    validationStub['error'] = new Error('error')
+    const httpResponse = await sut.handle(request)
+
+    expect(httpResponse).toEqual(badRequest(new Error('error')))
   })
 
   it('should call AddAccount with correct values', async () => {
