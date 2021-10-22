@@ -8,6 +8,5 @@ export class LogMongoRepository implements LogErrorRepository {
       stack,
       date: new Date()
     })
-    throw new Error("Method not implemented.");
   }
 }
