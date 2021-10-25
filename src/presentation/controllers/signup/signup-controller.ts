@@ -6,7 +6,7 @@ import {
   HttpResponse, 
   Controller, 
   AddAccount  
-} from './signup-protocols'
+} from './signup-controller-protocols'
 
 export class SignUpController implements Controller {
 
