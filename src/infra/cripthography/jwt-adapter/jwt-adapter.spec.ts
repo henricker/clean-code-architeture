@@ -23,10 +23,18 @@ const makeSut = (): ISutType => {
 }
 
 describe('Jwt Adapter', () => {
+  
   it('should call sign method of jwt', async () => {
     const { sut } = makeSut()
     const signSpy = jest.spyOn(jwt, 'sign')
     await sut.encrypt('any_id')
     expect(signSpy).toHaveBeenCalledWith({ id: 'any_id' }, 'secret')
+  })
+ 
+  it('should throw if sign method of jwt throws', async () => {
+    const { sut } = makeSut()
+    jest.spyOn(jwt as any, 'sign').mockImplementationOnce(() => { throw new Error() })
+    const promise = sut.encrypt('any_id')
+    await expect(promise).rejects.toThrow()
   })
 })
