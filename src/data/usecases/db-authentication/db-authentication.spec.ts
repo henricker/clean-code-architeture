@@ -1,10 +1,12 @@
-import { DbAuthentication } from './db-authentication'
-import { LoadAccountByEmailRepository } from '../../protocols/db/load-account-by-email-repository'
-import { AccountModel } from '../add-account/db-add-account-protocols'
-import { AuthenticationModel } from '../../../domain/usecases/authentication'
-import { HashComparer } from '../../protocols/criptography/hash-comparer'
-import { TokenGenerator } from '../../protocols/criptography/token-generator'
-import { UpdateAccessTokenRepository } from '../../protocols/db/update-access-token-repository'
+import { DbAuthentication } from './db-authentication';
+import { 
+  AuthenticationModel,
+  HashComparer,
+  AccountModel,
+  LoadAccountByEmailRepository, 
+  TokenGenerator, 
+  UpdateAccessTokenRepository 
+} from './db-authentication-protocols';
 
 const makeFakeAccount = (): AccountModel => ({
   email: 'any_email',
