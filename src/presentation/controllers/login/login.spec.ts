@@ -4,6 +4,7 @@ import { Validation } from "../../protocols/validation"
 import { LoginController } from "./login"
 import { 
   Authentication, 
+  AuthenticationModel, 
   HttpRequest, 
 } from "./login-protocols"
 
@@ -16,7 +17,7 @@ interface ISutType {
 
 const makeAuthentication = (): Authentication => {
   class AuthenticationStub implements Authentication {
-    async auth(email: string, password: string): Promise<string> {
+    async auth(authentication: AuthenticationModel): Promise<string> {
       return 'any_token'
     }
   }
@@ -60,7 +61,7 @@ describe('Login Controller', () => {
 
     await sut.handle(makeFakeRequest())
 
-    expect(validateSpy).toHaveBeenCalledWith(makeFakeRequest())
+    expect(validateSpy).toHaveBeenCalledWith(makeFakeRequest().body)
   })
 
   it('should return 400 if Validation return one error', async () => {
@@ -91,7 +92,7 @@ describe('Login Controller', () => {
     const authSpy = jest.spyOn(authenticationStub, 'auth')
     await sut.handle(makeFakeRequest())
 
-    expect(authSpy).toHaveBeenCalledWith('any_email@email.com', 'any_password')
+    expect(authSpy).toHaveBeenCalledWith({ email: 'any_email@email.com', password: 'any_password' })
   })
 
   it('should return 401 if Authentication returns null', async () => {
