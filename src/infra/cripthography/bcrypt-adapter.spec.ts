@@ -49,6 +49,7 @@ describe('Bcrypt Adapter', () => {
   })
 
   describe('compare()', () => {
+    
     it('should call compare with correct values', async () => {
       const { sut } = makeSut(12)
 
@@ -56,7 +57,12 @@ describe('Bcrypt Adapter', () => {
       await sut.compare('any_value', 'any_hash')
       expect(compareSpy).toHaveBeenCalledWith('any_value', 'any_hash')
     })
-    it.todo('should return true when compare succeeds')
+    
+    it('should return true when compare succeeds', async () => {
+      const { sut } = makeSut(12)
+      const isValid = await sut.compare('any_value', 'any_hash')
+      expect(isValid).toBeTruthy()
+    })
     it.todo('should return false when compare fails')
     it.todo('should throw if compare throws')
   })
