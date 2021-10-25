@@ -1,5 +1,5 @@
-import { Validation } from "../../protocols/validation"
-import { ValidationComposite } from "./validation-composite"
+import { Validation } from '../../protocols/validation'
+import { ValidationComposite } from './validation-composite'
 
 
 interface ISutType {

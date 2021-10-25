@@ -1,5 +1,5 @@
-import { MissingParamError } from "../../errors"
-import { RequiredFieldsValidation } from "./required-fields-validation"
+import { MissingParamError } from '../../errors'
+import { RequiredFieldsValidation } from './required-fields-validation'
 
 interface ISutType {
   sut: RequiredFieldsValidation

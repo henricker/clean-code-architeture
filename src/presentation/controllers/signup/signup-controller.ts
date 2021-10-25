@@ -1,4 +1,3 @@
-import { InvalidParamError } from '../../errors'
 import { badRequest, ok, serverError } from '../../helpers/http/http-helper'
 import { Validation } from '../../protocols/validation'
 import { 
