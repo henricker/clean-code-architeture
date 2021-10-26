@@ -132,7 +132,7 @@ describe('SignUp Controller', () => {
     // sut => system under test
     const { sut } = makeSut()
     const httpResponse = await sut.handle(makeFakeRequest())
-    expect(httpResponse).toEqual(ok(makeFakeAccountModel()))
+    expect(httpResponse).toEqual(ok({ accessToken: 'any_token' }))
   })
 
   it('should call Authentication with correct values', async () => {
