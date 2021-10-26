@@ -3,3 +3,4 @@ build
 data
 coverage
 .vscode
+./globalConfig.json
