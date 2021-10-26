@@ -21,10 +21,10 @@ const makeFakeAuthentication = (): AuthenticationModel => ({
 })
 
 interface ISutTypes {
-  sut: DbAuthentication,
-  loadAccountByEmailRepositoryStub: LoadAccountByEmailRepository,
-  hashComparerStub: HashComparer,
-  encrypterStub: Encrypter,
+  sut: DbAuthentication
+  loadAccountByEmailRepositoryStub: LoadAccountByEmailRepository
+  hashComparerStub: HashComparer
+  encrypterStub: Encrypter
   updateAccessTokenRepositoryStub: UpdateAccessTokenRepository
 }
 
