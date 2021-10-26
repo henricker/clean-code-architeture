@@ -1,6 +1,6 @@
-import { EmailInUseError } from '../../errors'
-import { badRequest, forbiden, ok, serverError } from '../../helpers/http/http-helper'
-import { Validation } from '../../protocols/validation'
+import { EmailInUseError } from '../../../errors'
+import { badRequest, forbiden, ok, serverError } from '../../../helpers/http/http-helper'
+import { Validation } from '../../../protocols/validation'
 import { 
   HttpRequest, 
   HttpResponse, 
