@@ -1,0 +1,53 @@
+import { AuthMiddleware } from './auth-middleware'
+import { forbidden } from '../helpers/http/http-helper'
+import { AccessDeniedError } from '../errors'
+import { HttpRequest } from '../protocols'
+import { LoadAccountByToken } from '../../domain/usecases/load-account-by-token'
+import { AccountModel } from '../../domain/models/Account'
+
+const makeFakeRequest = (): HttpRequest => ({
+  headers: {
+    'x-access-token': 'any_token'
+  }
+})
+
+interface ISutTypes {
+  sut: AuthMiddleware
+  loadAccountByTokenStub: LoadAccountByToken
+}
+
+const makeFakeAccountModel = (): AccountModel => ({
+  id: 'valid_id',
+  name: 'valid_name',
+  email: 'valid_email@email.com',
+  password: 'valid_password'
+})
+
+
+const makeLoadAccountByTokenStub = (): LoadAccountByToken => {
+  class LoadAccountByTokenStub implements LoadAccountByToken {
+    async load(accessToken: string, role?: string): Promise<AccountModel> {
+      return makeFakeAccountModel()
+    }
+  }
+
+  return new LoadAccountByTokenStub()
+}
+
+const makeSut = (role?: string): ISutTypes => {
+  const loadAccountByTokenStub = makeLoadAccountByTokenStub()
+  const sut = new AuthMiddleware(loadAccountByTokenStub)
+  return {
+    sut,
+    loadAccountByTokenStub
+  }
+}
+
+describe('Auth Middleware', () => {
+  
+  it('Should return 403 if no x-access-token exists in headers', async () => {
+    const { sut } = makeSut()
+    const httpResponse = await sut.handle({})
+    expect(httpResponse).toEqual(forbidden(new AccessDeniedError()))
+  })
+})
