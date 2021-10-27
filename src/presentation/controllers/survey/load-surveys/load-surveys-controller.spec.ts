@@ -67,4 +67,11 @@ describe('LoadSurveys Controller', () => {
     const httpResponse = await sut.handle(makeFakeRequest())
     expect(httpResponse).toEqual(ok(makeSurveysModels()))
   })
+
+  it('Should return 204 if LoadSurveys return empty array', async () => {
+    const { sut } = makeSut()
+    const httpResponse = await sut.handle(makeFakeRequest())
+    expect(httpResponse).toEqual(ok(makeSurveysModels()))
+  })
+
 })
