@@ -1,9 +1,9 @@
+import { makeAddSurveyValidation } from './add-survey-validation-factory'
 import { 
   RequiredFieldsValidation, 
   ValidationComposite 
-} from '../../../../../validation/validation'
-import { Validation } from '../../../../../presentation/protocols/validation'
-import { makeAddSurveyValidation } from './add-survey-validation-factory'
+} from '@/validation/validation'
+import { Validation } from '@/presentation/protocols/validation'
 
 jest.mock('../../../../../validation/validation/validation-composite')
 

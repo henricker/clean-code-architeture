@@ -1,11 +1,11 @@
-import { badRequest, ok, serverError, unauthorized } from '../../../helpers/http/http-helper'
-import { Validation } from '../../../protocols/validation'
 import { LoginController } from './login-controller'
 import { 
   Authentication, 
   AuthenticationModel, 
   HttpRequest, 
 } from './login-controller-protocols'
+import { badRequest, ok, serverError, unauthorized } from '@/presentation/helpers/http/http-helper'
+import { Validation } from '@/presentation/protocols/validation'
 
 
 interface ISutType {

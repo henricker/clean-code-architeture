@@ -1,7 +1,7 @@
 import { SurveyMongoRepository } from './survey-mongo-repository'
 import { MongoHelper } from '../helpers/mongo-helper'
+import { AddSurveyModel } from '@/domain/usecases/add-survey'
 import { Collection } from 'mongodb'
-import { AddSurveyModel } from '../../../../domain/usecases/add-survey'
 
 const makeSut = (): SurveyMongoRepository => {
   return new SurveyMongoRepository()

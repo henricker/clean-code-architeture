@@ -7,10 +7,10 @@ import {
   Authentication,
   AuthenticationModel
   } from './signup-controller-protocols'
-import { ServerError } from '../../../errors/server-error'
-import { badRequest, forbidden, ok, serverError } from '../../../helpers/http/http-helper'
-import { Validation } from '../../../protocols/validation'
-import { EmailInUseError } from '../../../errors'
+import { ServerError } from '@/presentation/errors/server-error'
+import { badRequest, forbidden, ok, serverError } from '@/presentation/helpers/http/http-helper'
+import { Validation } from '@/presentation/protocols/validation'
+import { EmailInUseError } from '@/presentation/errors'
 
 interface SutTypes {
   sut: SignUpController

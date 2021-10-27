@@ -7,7 +7,7 @@
     "start": "node build/main/server.js",
     "up": "npm run build && docker-compose up -d",
     "debug": "nodemon -L --watch ./build --inspect=0.0.0.0:9222 --nolazy ./build/main/server.js",
-    "build": "rm -rf build && tsc",
+    "build": "rm -rf build && tsc -p ts-config-build.json",
     "test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
     "test:verbose": "jest --passWithNoTests --runInBand",
     "test:unit": "npm test -- --watch -c jest-unit-config.js",
@@ -38,11 +38,16 @@
     "bcrypt": "^5.0.1",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
+    "module-alias": "^2.2.2",
     "mongodb": "^3.6.3",
     "nodemon": "^2.0.14",
     "validator": "^13.6.0"
   },
   "engines": {
     "node": "14.x"
+  },
+
+  "_moduleAliases": {
+    "@": "build"
   }
 }

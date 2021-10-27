@@ -1,7 +1,7 @@
-import { SurveyModel } from '../../../../domain/models/Survey'
 import { LoadSurveyController } from './load-surveys-controller'
 import { HttpRequest, LoadSurveys } from './load-surveys-controller-protocols'
-import { ok, serverError } from '../../../helpers/http/http-helper'
+import { SurveyModel } from '@/domain/models/Survey'
+import { ok, serverError } from '@/presentation/helpers/http/http-helper'
 
 interface ISutTypes {
   sut: LoadSurveyController

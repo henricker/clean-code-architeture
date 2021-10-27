@@ -1,8 +1,8 @@
-import { Validation } from '../../../protocols/validation'
 import { AddSurveyController } from './add-survey-controller'
 import { AddSurvey, HttpRequest } from './add-survey-controller-protocols'
-import { badRequest, noContent, serverError } from '../../../helpers/http/http-helper'
-import { AddSurveyModel } from '../../../../domain/usecases/add-survey'
+import { Validation } from '@/presentation/protocols/validation'
+import { badRequest, noContent, serverError } from '@/presentation/helpers/http/http-helper'
+import { AddSurveyModel } from '@/domain/usecases/add-survey'
 import MockDate from 'mockdate'
 
 interface ISutTypes {
