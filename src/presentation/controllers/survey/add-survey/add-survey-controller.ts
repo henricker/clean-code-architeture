@@ -1,7 +1,7 @@
-import { badRequest, noContent, serverError } from "../../../helpers/http/http-helper";
-import { HttpRequest, HttpResponse } from "../../../protocols";
-import { Validation } from "../../../protocols/validation";
-import { AddSurvey, Controller } from "./add-survey-controller-protocols";
+import { badRequest, noContent, serverError } from '../../../helpers/http/http-helper'
+import { HttpRequest, HttpResponse } from '../../../protocols'
+import { Validation } from '../../../protocols/validation'
+import { AddSurvey, Controller } from './add-survey-controller-protocols'
 
 
 export class AddSurveyController implements Controller {
