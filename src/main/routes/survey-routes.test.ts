@@ -39,7 +39,7 @@ describe('Survey Routes', () => {
       const response = await request(app)
         .post('/api/surveys')
         .send(makeFakeSurveyData())
-        .expect(204)
+        .expect(403)
     })
   })
 
