@@ -1,7 +1,7 @@
 import { JwtAdapter } from './jwt-adapter'
 import jwt, { JwtPayload } from 'jsonwebtoken'
 
-interface ISutType {
+type SutTypes = {
   sut: JwtAdapter
 }
 
@@ -17,7 +17,7 @@ jest.mock('jsonwebtoken', () => ({
   }
 }))
 
-const makeSut = (): ISutType => {
+const makeSut = (): SutTypes => {
   const sut = new JwtAdapter('secret')
   return {
     sut

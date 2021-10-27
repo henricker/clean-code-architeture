@@ -5,7 +5,7 @@ import { badRequest, noContent, serverError } from '@/presentation/helpers/http/
 import { AddSurveyModel } from '@/domain/usecases/add-survey'
 import MockDate from 'mockdate'
 
-interface ISutTypes {
+type SutTypes = {
   sut: AddSurveyController
   validationStub: Validation
   addSurveyStub: AddSurvey
@@ -39,7 +39,7 @@ const makeAddSurveyStub = (): AddSurvey => {
   return new AddSurveyStub()
 }
 
-const makeSut = (): ISutTypes => {
+const makeSut = (): SutTypes => {
   const validationStub = makeValidationStub()
   const addSurveyStub = makeAddSurveyStub()
   const sut = new AddSurveyController(validationStub, addSurveyStub)

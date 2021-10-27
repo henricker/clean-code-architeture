@@ -8,7 +8,7 @@ import { badRequest, ok, serverError, unauthorized } from '@/presentation/helper
 import { Validation } from '@/presentation/protocols/validation'
 
 
-interface ISutType {
+type SutType = {
   sut: LoginController,
   validationStub: Validation
   authenticationStub: Authentication
@@ -41,7 +41,7 @@ const makeFakeRequest = (): HttpRequest => ({
   }
 })
 
-const makeSut = (): ISutType => {
+const makeSut = (): SutType => {
   const authenticationStub = makeAuthentication()
   const validationStub = makeValidation()
   const sut = new LoginController(validationStub, authenticationStub)

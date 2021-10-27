@@ -12,7 +12,7 @@ import { badRequest, forbidden, ok, serverError } from '@/presentation/helpers/h
 import { Validation } from '@/presentation/protocols/validation'
 import { EmailInUseError } from '@/presentation/errors'
 
-interface SutTypes {
+type SutTypes = {
   sut: SignUpController
   validationStub: Validation
   addAccountStub: AddAccount

@@ -3,7 +3,7 @@ import { HttpRequest, LoadSurveys } from './load-surveys-controller-protocols'
 import { SurveyModel } from '@/domain/models/Survey'
 import { ok, serverError } from '@/presentation/helpers/http/http-helper'
 
-interface ISutTypes {
+type SutTypes = {
   sut: LoadSurveyController
   loadSurveysStub: LoadSurveys
 }
@@ -37,7 +37,7 @@ const makeLoadSurveysStub = (): LoadSurveys => {
   return new LoadSurveysStub()
 }
 
-const makeSut = (): ISutTypes => {
+const makeSut = (): SutTypes => {
   const loadSurveysStub = makeLoadSurveysStub()
   const sut = new LoadSurveyController(loadSurveysStub)
 

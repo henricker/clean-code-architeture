@@ -9,7 +9,7 @@ const makeFakeRequest = (): HttpRequest => ({
   }
 })
 
-interface ISutTypes {
+type SutTypes = {
   sut: AuthMiddleware
   loadAccountByTokenStub: LoadAccountByToken
 }
@@ -32,7 +32,7 @@ const makeLoadAccountByTokenStub = (): LoadAccountByToken => {
   return new LoadAccountByTokenStub()
 }
 
-const makeSut = (role?: string): ISutTypes => {
+const makeSut = (role?: string): SutTypes => {
   const loadAccountByTokenStub = makeLoadAccountByTokenStub()
   const sut = new AuthMiddleware(loadAccountByTokenStub, role)
   return {

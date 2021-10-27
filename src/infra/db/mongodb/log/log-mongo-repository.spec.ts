@@ -2,11 +2,11 @@ import { LogMongoRepository } from './log-mongo-repository'
 import { MongoHelper } from '../helpers/mongo-helper'
 import { Collection } from 'mongodb'
 
-interface ISutType {
+type SutType = {
   sut: LogMongoRepository
 }
 
-const makeSut = (): ISutType => {
+const makeSut = (): SutType => {
   const sut = new LogMongoRepository()
   return {
     sut

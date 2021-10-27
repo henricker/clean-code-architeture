@@ -4,7 +4,7 @@ import { ok, serverError } from '@/presentation/helpers/http/http-helper'
 import { Controller, HttpRequest, HttpResponse } from '@/presentation/protocols'
 import { LogControllerDecorator } from './log-decorator'
 
-interface ISutType {
+type SutTypes = {
   sut: LogControllerDecorator
   controllerStub: Controller
   logErrorRepositoryStub: LogErrorRepository
@@ -53,7 +53,7 @@ const makeControllerStub = (): Controller => {
   return new ControllerStub()
 }
 
-const makesut = (): ISutType => {
+const makesut = (): SutTypes => {
   const logErrorRepositoryStub = makeLogErrorRepository()
   const controllerStub = makeControllerStub()
   const sut = new LogControllerDecorator(controllerStub, logErrorRepositoryStub)

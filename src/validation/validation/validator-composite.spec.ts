@@ -2,7 +2,7 @@ import { ValidationComposite } from './validation-composite'
 import { Validation } from '@/presentation/protocols/validation'
 
 
-interface ISutType {
+type SutTypes = {
   sut: ValidationComposite
   validations: Validation[]
 }
@@ -17,7 +17,7 @@ const makeValidationStub = (): Validation => {
   return new ValidationStub()
 }
 
-const makeSut = (): ISutType => {
+const makeSut = (): SutTypes => {
   const validations = [makeValidationStub(), makeValidationStub()]
   const sut = new ValidationComposite(validations)
   return {

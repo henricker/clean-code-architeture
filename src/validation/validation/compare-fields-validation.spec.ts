@@ -1,12 +1,12 @@
 import { CompareFieldsValidation } from './compare-fields-validation'
 import { InvalidParamError } from '@/presentation/errors'
 
-interface ISutType {
+type SutTypes = {
   sut: CompareFieldsValidation
 }
 
 
-const makeSut = (): ISutType => {
+const makeSut = (): SutTypes => {
   const sut = new CompareFieldsValidation('fieldName', 'fieldToCompare')
   return {
     sut
