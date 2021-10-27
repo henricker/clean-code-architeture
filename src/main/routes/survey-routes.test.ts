@@ -41,7 +41,7 @@ describe('Survey Routes', () => {
 
   describe('POST /surveys', () => {
     
-    it('should return an account', async () => {
+    it('should return 403 if no x-access-token provided', async () => {
       await request(app)
         .post('/api/surveys')
         .send(makeFakeSurveyData())
@@ -72,6 +72,40 @@ describe('Survey Routes', () => {
       .send(makeFakeSurveyData())
       .expect(204)
     })
+  })
+
+  describe('GET /surveys', () => {
+    
+    it('should return 403 if no x-access-token provided', async () => {
+      await request(app)
+        .get('/api/surveys')
+        .expect(403)
+    })
+
+    // it('should return 204 on add survey with valid accessToken', async () => {
+    //   const res = await accountCollection.insertOne({
+    //     name: 'henricker',
+    //     email: 'henricker@email.com',
+    //     password: 'any_password',
+    //     role: 'admin'
+    //   })
+
+    //   const id = res.ops[0]._id
+    //   const accessToken = sign({ id }, env.secret)
+    //   await accountCollection.update({
+    //     _id: id,
+    //   }, {
+    //     $set: {
+    //       accessToken
+    //     }
+    //   })
+
+    //   await request(app)
+    //   .post('/api/surveys')
+    //   .set('x-access-token', accessToken)
+    //   .send(makeFakeSurveyData())
+    //   .expect(204)
+    // })
   })
 
 })
