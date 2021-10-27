@@ -16,7 +16,8 @@ const makeFakeSurveyData = (): AddSurveyModel => ({
       {
         answer: 'other_answer'
       }
-  ]
+  ],
+  date: new Date('2021-10-27T16:16:47.696Z')
 })
 
 let surveyCollection: Collection
