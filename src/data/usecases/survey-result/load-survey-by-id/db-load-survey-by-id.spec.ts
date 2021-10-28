@@ -1,4 +1,4 @@
-import { SurveyModel } from '../load-surveys/db-load-surveys-protocols'
+import { SurveyModel } from '../../survey/load-surveys/db-load-surveys-protocols'
 import { DbLoadSurveyById } from './db-load-survey-by-id'
 import { LoadSuveyByIdRepository } from './db-load-survey-by-id-protocols'
 
