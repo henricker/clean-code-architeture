@@ -1,5 +1,5 @@
-import { SurveyResultModel } from "@/domain/models/survey-result";
+import { SurveyModel } from '@/domain/models/Survey'
 
 export interface LoadSurveyById {
-  loadById(id: string): Promise<SurveyResultModel>
+  loadById(id: string): Promise<SurveyModel>
 }
