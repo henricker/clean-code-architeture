@@ -7,7 +7,7 @@ type SutTypes = {
   loadSurveyByIdRepositoryStub: LoadSuveyByIdRepository
 }
 
-const makeSurveysModel = (): SurveyModel => (
+const makeSurveyModel = (): SurveyModel => (
   {
     id: 'valid_id',
     answers: [
@@ -24,7 +24,7 @@ const makeSurveysModel = (): SurveyModel => (
 const makeLoadSurveyByIdRepositoryStub = (): LoadSuveyByIdRepository => {
   class LoadSurveyByIdRepositoryStub implements LoadSuveyByIdRepository {
     async loadById(id: string): Promise<SurveyModel> {
-      return makeSurveysModel()
+      return makeSurveyModel()
     }
   }
 
@@ -55,6 +55,12 @@ describe('DbLoadAccountById UseCase', () => {
     jest.spyOn(loadSurveyByIdRepositoryStub, 'loadById').mockRejectedValueOnce(new Error())
     const promise = sut.loadById('valid_id')
     await expect(promise).rejects.toThrow()
+  })
+
+  it('Should return a Survey on success', async () => {
+    const { sut } = makeSut()
+    const survey = await sut.loadById('valid_id')
+    expect(survey).toEqual(makeSurveyModel())
   })
 
 })
