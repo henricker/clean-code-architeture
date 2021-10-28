@@ -2,7 +2,7 @@ import { SurveyModel } from "@/domain/models/Survey"
 import { SurveyResultModel } from "@/domain/models/survey-result"
 import { SaveSurveyResultModel } from "@/domain/usecases/save-survey-result"
 import { InvalidParamError } from "@/presentation/errors"
-import { forbidden, serverError } from "@/presentation/helpers/http/http-helper"
+import { forbidden, ok, serverError } from "@/presentation/helpers/http/http-helper"
 import { SaveSurveyResultController } from "./save-survey-result-controller"
 import { HttpRequest, LoadSurveyById, SaveSurveyResult } from "./save-survey-result-controller-protocols"
 import MockDate from 'mockdate'
@@ -32,8 +32,15 @@ const makeFakeSurvey = (): SurveyModel => ({
   ],
   date: new Date('2021-10-27T16:16:47.696Z'),
   question: 'valid_question'
-}
-)
+})
+
+const makeFakeSurveyResult = (): SurveyResultModel => ({
+  accountId: 'any_account_id',
+  surveyId: 'any_survey_id',
+  answer: 'valid_answer',
+  date: new Date('2021-10-27T16:16:47.696Z'),
+  id: 'valid_id' 
+})
 
 const makeLoadSurveyByIdStub = (): LoadSurveyById => {
   class LoadSurveyByIdStub implements LoadSurveyById {
@@ -48,7 +55,7 @@ const makeLoadSurveyByIdStub = (): LoadSurveyById => {
 const makeSaveSurveyResultStub = (): SaveSurveyResult => {
   class SaveSurveyResultStub implements SaveSurveyResult {
     async save(data: SaveSurveyResultModel): Promise<SurveyResultModel> {
-      throw new Error("Method not implemented.")
+      return makeFakeSurveyResult()
     }
   }
 
@@ -116,12 +123,17 @@ describe('SaveSurveyResult Controller', () => {
     })
   })
 
-  test('Should return 500 if SaveSurveyResult throws', async () => {
+  it('Should return 500 if SaveSurveyResult throws', async () => {
     const { sut, saveSurveyResultStub } = makeSut()
     jest.spyOn(saveSurveyResultStub, 'save').mockRejectedValueOnce(new Error())
     const httpResponse = await sut.handle(makeHttpRequest())
     expect(httpResponse).toEqual(serverError(new Error()))
   })
 
+  it('Should return 200 on success', async () => {
+    const { sut } = makeSut()
+    const httpResponse = await sut.handle(makeHttpRequest())
+    expect(httpResponse).toEqual(ok(makeFakeSurveyResult()))
+  })
 
 })
