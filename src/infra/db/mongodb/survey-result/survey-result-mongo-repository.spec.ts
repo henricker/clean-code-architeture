@@ -19,6 +19,9 @@ const makeSurvey = async (): Promise<SurveyModel> => {
       {
         image: 'any_image',
         answer: 'any_answer'
+      },
+      {
+        answer: 'other_answer'
       }
     ],
     date: new Date('2021-10-27T16:16:47.696Z')
@@ -56,6 +59,7 @@ describe('Survey Result Mongo Repository', () => {
   })
 
   describe('save()', () => {
+
     it('Should add a survey result if its new', async () => {
       const sut = makeSut()
       const survey = await makeSurvey()
@@ -69,6 +73,27 @@ describe('Survey Result Mongo Repository', () => {
       expect(surveyResult).toBeTruthy()
       expect(surveyResult.id).toBeTruthy()
       expect(surveyResult.answer).toBe(survey.answers[0].answer)
+    })
+
+    it('Should update survey result if its not new', async () => {
+      const sut = makeSut()
+      const survey = await makeSurvey()
+      const account = await makeAccount()
+      const res = await sut.save({
+        surveyId: survey.id,
+        accountId: account.id,
+        answer: survey.answers[0].answer,
+        date: new Date('2021-10-27T16:16:47.696Z')
+      })
+      const surveyResult = await sut.save({
+        surveyId: survey.id,
+        accountId: account.id,
+        answer: survey.answers[1].answer,
+        date: new Date('2021-10-27T16:16:47.696Z')
+      })
+      expect(surveyResult).toBeTruthy()
+      expect(surveyResult.id).toEqual(res.id)
+      expect(surveyResult.answer).toBe(survey.answers[1].answer)
     })
   })
 
