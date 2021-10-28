@@ -42,10 +42,19 @@ const makeSut = (): SutTypes => {
 }
 
 describe('DbLoadAccountById UseCase', () => {
-  it('Should call LoadbyIdRepository with correct id', async () => {
+  
+  it('Should call LoadSurveybyIdRepository with correct id', async () => {
     const { sut, loadSurveyByIdRepositoryStub } = makeSut()
     const loadSpy = jest.spyOn(loadSurveyByIdRepositoryStub, 'loadById')
     await sut.loadById('valid_id')
     expect(loadSpy).toHaveBeenCalledWith('valid_id')
   })
+
+  it('Should throw if LoadSurveyByIdRepository throws', async () => {
+    const { sut, loadSurveyByIdRepositoryStub } = makeSut()
+    jest.spyOn(loadSurveyByIdRepositoryStub, 'loadById').mockRejectedValueOnce(new Error())
+    const promise = sut.loadById('valid_id')
+    await expect(promise).rejects.toThrow()
+  })
+
 })
