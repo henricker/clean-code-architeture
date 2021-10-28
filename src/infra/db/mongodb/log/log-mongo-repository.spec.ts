@@ -13,7 +13,7 @@ const makeSut = (): SutType => {
   }
 }
 
-describe('LogMongoRepository', () => {
+describe('Log Mongo Repository', () => {
   let errorCollection: Collection
   beforeAll(async () => {
     await MongoHelper.connect(process.env.MONGO_URL)
