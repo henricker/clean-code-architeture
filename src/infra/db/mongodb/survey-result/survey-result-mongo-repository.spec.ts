@@ -92,6 +92,7 @@ describe('Survey Result Mongo Repository', () => {
         date: new Date('2021-10-27T16:16:47.696Z')
       })
       expect(surveyResult).toBeTruthy()
+      expect(surveyResult.id).toBeTruthy()
       expect(surveyResult.id).toEqual(res.id)
       expect(surveyResult.answer).toBe(survey.answers[1].answer)
     })
