@@ -15,6 +15,10 @@ type SutTypes = {
 const makeHttpRequest = (): HttpRequest => ({
   params: {
     surveyId: 'any_survey_id'
+  },
+  accountId: 'any_account_id',
+  body: {
+    answer: 'valid_answer'
   }
 })
 
@@ -87,6 +91,12 @@ describe('SaveSurveyResult Controller', () => {
     jest.spyOn(loadSurveyByIdStub, 'loadById').mockRejectedValueOnce(new Error())
     const httpResponse = await sut.handle(makeHttpRequest())
     expect(httpResponse).toEqual(serverError(new Error()))
+  })
+
+  it('Should return 403 if an invalid answer is provided', async () => {
+    const { sut } = makeSut()
+    const httpResponse = await sut.handle({ ...makeHttpRequest(), body: { answer: 'wrong_answer' } })
+    expect(httpResponse).toEqual(forbidden(new InvalidParamError('answer')))
   })
 
 })
