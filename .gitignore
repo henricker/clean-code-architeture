@@ -1,6 +1,6 @@
 node_modules
 build
-data
+mongo_data
 coverage
 .vscode
 ./globalConfig.json
