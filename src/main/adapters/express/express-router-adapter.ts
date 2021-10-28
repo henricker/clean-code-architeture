@@ -4,7 +4,10 @@ import { Request, Response } from 'express'
 export const adaptRouter = (controller: Controller) => {
   return async (request: Request, response: Response) => {
     const httpRequest: HttpRequest = {
-      body: request.body
+      body: request.body,
+      params: request.params,
+      accountId: request['accountId'],
+      headers: request.headers
     } 
 
     const httpResponse = await controller.handle(httpRequest)

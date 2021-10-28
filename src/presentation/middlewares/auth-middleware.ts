@@ -17,11 +17,11 @@ export class AuthMiddleware implements Middleware {
         return forbidden(new AccessDeniedError())
   
       const account = await this.loadAccountByToken.load(accessToken, this.role)
-      
+   
       if(!account)
         return forbidden(new AccessDeniedError())
-  
-      return ok(account)
+
+      return ok({ accountId: account.id })
     } catch(err) {
       return serverError(err)
     }
