@@ -19,6 +19,7 @@ export class SaveSurveyResultController implements Controller {
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
       const { surveyId } = httpRequest.params
+      const { accountId } = httpRequest
       const { answer } = httpRequest.body
 
       const survey = await this.loadSurveyById.loadById(surveyId)
@@ -30,6 +31,13 @@ export class SaveSurveyResultController implements Controller {
       
       if(!answers.includes(answer))
         return forbidden(new InvalidParamError('answer'))
+
+      await this.saveSurveyResult.save({
+        accountId,
+        surveyId,
+        answer,
+        date: new Date()
+      })
       
       return null
     } catch(err) {
