@@ -7,7 +7,7 @@
     "start": "node build/main/server.js",
     "up": "npm run build && docker-compose up -d",
     "debug": "nodemon -L --watch ./build --inspect=0.0.0.0:9222 --nolazy ./build/main/server.js",
-    "build": "rm -rf build && tsc -p ts-config-build.json",
+    "build": "rm -rf build && tsc -p tsconfig-build.json",
     "test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
     "test:verbose": "jest --passWithNoTests --runInBand",
     "test:unit": "npm test -- --watch -c jest-unit-config.js",
