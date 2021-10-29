@@ -1,5 +1,5 @@
-import { SurveyResultModel } from '../../src/domain/models/survey-result'
-import { SaveSurveyResult, SaveSurveyResultParams } from '../../src/domain/usecases/save-survey-result'
+import { SurveyResultModel } from '@/domain/models/survey-result'
+import { SaveSurveyResultParams } from '@/domain/usecases/save-survey-result'
 
 import faker from 'faker'
 
@@ -12,8 +12,32 @@ export const mockSaveSurveyResultParams = (): SaveSurveyResultParams => ({
 
 export const mockSurveyResultModel = (): SurveyResultModel => ({
   surveyId: faker.datatype.uuid(),
-  accountId: faker.datatype.uuid(),
-  answer: faker.random.words(),
-  date: faker.date.recent(),
-  id: faker.datatype.uuid()
+  question: faker.random.words(),
+  answers: [{
+    answer: faker.random.word(),
+    count: 1,
+    percent: 50,
+  }, {
+    answer: faker.random.word(),
+    image: faker.image.imageUrl(),
+    count: 10,
+    percent: 80,
+  }],
+  date: faker.date.recent()
+})
+
+export const mockEmptySurveyResultModel = (): SurveyResultModel => ({
+  surveyId: faker.datatype.uuid(),
+  question: faker.random.words(),
+  answers: [{
+    answer: faker.random.word(),
+    count: 0,
+    percent: 0,
+  }, {
+    answer: faker.random.word(),
+    image: faker.image.imageUrl(),
+    count: 0,
+    percent: 0,
+  }],
+  date: faker.date.recent()
 })

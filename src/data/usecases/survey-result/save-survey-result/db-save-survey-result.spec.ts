@@ -8,7 +8,7 @@ type SutTypes = {
 }
 
 const makeSaveSurveyResultParams = mockSaveSurveyResultParams()
-const makeSurveyResultModel = { ...makeSaveSurveyResultParams, id: mockSurveyResultModel().id }
+const makeSurveyResultModel = { ...mockSurveyResultModel(), surveyId: makeSaveSurveyResultParams.surveyId }
 
 const makeSaveSurveyResultRepositoryStub = (): SaveSurveyResultRepository => {
   class SaveSurveyResultRepositoryStub implements SaveSurveyResultRepository {

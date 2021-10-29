@@ -30,11 +30,17 @@ const makeHttpRequest = (): HttpRequest => ({
 
 
 const makeFakeSurveyResult = (): SurveyResultModel => ({
-  accountId: makeFakeAccountModel.id,
   surveyId: makeFakeSurveyModel.id,
-  answer: makeFakeSurveyModel.answers[0].answer,
   date: new Date('2021-10-27T16:16:47.696Z'),
-  id: '3289127asdysd897812kj'
+  answers: [
+    {
+      answer: 'any_answer',
+      count: 1,
+      percent: 100,
+      image: 'image_url',
+    },
+  ],
+  question: 'any_question'
 })
 
 const makeLoadSurveyByIdStub = (): LoadSurveyById => {
