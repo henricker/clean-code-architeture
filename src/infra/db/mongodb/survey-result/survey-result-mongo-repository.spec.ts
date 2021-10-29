@@ -1,6 +1,6 @@
 import { SurveyResultMongoRepository } from './survey-result-mongo-repository'
 import { MongoHelper } from '../helpers/mongo-helper'
-import { Collection } from 'mongodb'
+import { Collection, ObjectId } from 'mongodb'
 import { SurveyModel } from '@/domain/models/Survey'
 import { AccountModel } from '@/domain/models/Account'
 import { mockAddSurveyParams } from '@/__tests__/domain/mock-survey'
@@ -8,6 +8,7 @@ import { mockAddAccountParams } from '@/__tests__/domain/mock-account'
 
 let surveyCollection: Collection
 let accountCollection: Collection
+let surveyResultCollection: Collection
 
 const makeSut = (): SurveyResultMongoRepository => {
   return new SurveyResultMongoRepository()
@@ -39,6 +40,7 @@ describe('Survey Result Mongo Repository', () => {
   beforeEach(async () => {
     surveyCollection = await MongoHelper.getCollection('surveys')
     accountCollection = await MongoHelper.getCollection('accounts')
+    surveyResultCollection = await MongoHelper.getCollection('surveyResults')
     await surveyCollection.deleteMany({})
   })
 
@@ -67,7 +69,7 @@ describe('Survey Result Mongo Repository', () => {
       const sut = makeSut()
       const survey = await makeSurvey()
       const account = await makeAccount()
-      const res = await sut.save({
+      await sut.save({
         surveyId: survey.id,
         accountId: account.id,
         answer: survey.answers[0].answer,
@@ -88,4 +90,47 @@ describe('Survey Result Mongo Repository', () => {
     })
   })
 
+  describe('LoadById()', () => {
+    it('Should be load survey result', async () => {
+      const survey = await makeSurvey()
+      const accountId =  (await makeAccount()).id
+      await surveyResultCollection.insertMany([
+        {
+          surveyId: new ObjectId(survey.id),
+          accountId: new ObjectId(accountId),
+          answer: survey.answers[0].answer,
+          date: new Date()
+        },
+        {
+          surveyId: new ObjectId(survey.id),
+          accountId: new ObjectId(accountId),
+          answer: survey.answers[0].answer,
+          date: new Date()
+        },
+        {
+          surveyId: new ObjectId(survey.id),
+          accountId: new ObjectId(accountId),
+          answer: survey.answers[1].answer,
+          date: new Date()
+        },
+        {
+          surveyId: new ObjectId(survey.id),
+          accountId: new ObjectId(accountId),
+          answer: survey.answers[1].answer,
+          date: new Date()
+        },
+      ])
+
+      const sut = makeSut()
+      const surveyResult = await sut.loadBySurveyId(survey.id)
+      expect(surveyResult).toBeTruthy()
+      expect(surveyResult.surveyId).toEqual(survey.id)
+      expect(surveyResult.answers[0].count).toBe(2)
+      expect(surveyResult.answers[0].percent).toBe(50)
+      expect(surveyResult.answers[1].count).toBe(2)
+      expect(surveyResult.answers[1].percent).toBe(50)
+      expect(surveyResult.answers[2].count).toBe(0)
+      expect(surveyResult.answers[2].percent).toBe(0)
+    })
+  })
 })
