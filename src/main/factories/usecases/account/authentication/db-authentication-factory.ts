@@ -3,7 +3,7 @@ import { DbAuthentication } from '@/data/usecases/account/authentication/db-auth
 import { AccountMongoRepository } from '@/infra/db/mongodb/account/account-mongo-repository'
 import { BcryptAdapter } from '@/infra/cripthography/bcrypt-adapter/bcrypt-adapter'
 import { JwtAdapter } from '@/infra/cripthography/jwt-adapter/jwt-adapter'
-import { Authentication } from '@/domain/usecases/authentication'
+import { Authentication } from '@/domain/usecases/account/authentication'
 
 export const makeAuthentication = (): Authentication => {
   const hasherCompare = new BcryptAdapter(12)

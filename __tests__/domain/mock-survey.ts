@@ -1,5 +1,5 @@
 import { SurveyModel } from '../../src/domain/models/Survey'
-import { AddSurveyParams } from '../../src/domain/usecases/add-survey'
+import { AddSurveyParams } from '../../src/domain/usecases/survey/add-survey'
 
 import faker from 'faker'
 

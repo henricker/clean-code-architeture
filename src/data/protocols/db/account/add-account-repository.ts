@@ -1,4 +1,4 @@
-import { AddAccountParams } from '@/domain/usecases/add-account'
+import { AddAccountParams } from '@/domain/usecases/account/add-account'
 import { AccountModel } from '@/domain/models/Account'
 
 export interface AddAccountRepository {

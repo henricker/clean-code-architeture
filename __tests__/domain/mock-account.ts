@@ -1,5 +1,5 @@
-import { AddAccountParams } from '../../src/domain/usecases/add-account'
-import { AuthenticationParams } from '../../src/domain/usecases/authentication'
+import { AddAccountParams } from './usecases/account/add-account'
+import { AuthenticationParams } from '../../src/domain/usecases/account/authentication'
 import { AccountModel } from '../../src/domain/models/Account'
 import faker from 'faker'
 

@@ -1,8 +1,7 @@
 import { AddSurveyController } from './add-survey-controller'
-import { AddSurvey, HttpRequest } from './add-survey-controller-protocols'
+import { AddSurvey, HttpRequest, AddSurveyParams } from './add-survey-controller-protocols'
 import { Validation } from '@/presentation/protocols/validation'
 import { badRequest, noContent, serverError } from '@/presentation/helpers/http/http-helper'
-import { AddSurveyParams } from '@/domain/usecases/add-survey'
 import MockDate from 'mockdate'
 import { mockAddSurveyParams } from '@/__tests__/domain/mock-survey'
 

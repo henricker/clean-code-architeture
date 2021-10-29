@@ -1,6 +1,6 @@
 import { SurveyModel } from "@/domain/models/Survey"
 import { SurveyResultModel } from "@/domain/models/survey-result"
-import { SaveSurveyResultParams } from "@/domain/usecases/save-survey-result"
+import { SaveSurveyResultParams } from "@/domain/usecases/survey-result/save-survey-result"
 import { InvalidParamError } from "@/presentation/errors"
 import { forbidden, ok, serverError } from "@/presentation/helpers/http/http-helper"
 import { SaveSurveyResultController } from "./save-survey-result-controller"
