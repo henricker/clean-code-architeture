@@ -1,18 +1,18 @@
 import { SurveyModel } from '../load-surveys/db-load-surveys-protocols'
 import { DbLoadSurveyById } from './db-load-survey-by-id'
-import { LoadSuveyByIdRepository } from './db-load-survey-by-id-protocols'
+import { LoadSurveyByIdRepository } from './db-load-survey-by-id-protocols'
 import { mockSurveyModel } from '@/__tests__/domain/mock-survey'
 
 type SutTypes = {
   sut: DbLoadSurveyById
-  loadSurveyByIdRepositoryStub: LoadSuveyByIdRepository
+  loadSurveyByIdRepositoryStub: LoadSurveyByIdRepository
 }
 
 const makeFakeSurveyModel = mockSurveyModel()
 
 
-const makeLoadSurveyByIdRepositoryStub = (): LoadSuveyByIdRepository => {
-  class LoadSurveyByIdRepositoryStub implements LoadSuveyByIdRepository {
+const makeLoadSurveyByIdRepositoryStub = (): LoadSurveyByIdRepository => {
+  class LoadSurveyByIdRepositoryStub implements LoadSurveyByIdRepository {
     async loadById(id: string): Promise<SurveyModel> {
       return makeFakeSurveyModel
     }
