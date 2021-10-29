@@ -6,6 +6,9 @@ import {
 } from './login-controller-protocols'
 import { badRequest, ok, serverError, unauthorized } from '@/presentation/helpers/http/http-helper'
 import { Validation } from '@/presentation/protocols/validation'
+import { mockAuthenticationParams } from '@/__tests__/domain/mock-account'
+
+const makeFakeAuthentication = mockAuthenticationParams()
 
 
 type SutType = {
@@ -35,10 +38,7 @@ const makeValidation = (): Validation => {
 }
 
 const makeFakeRequest = (): HttpRequest => ({
-  body: {
-    email: 'any_email@email.com',
-    password: 'any_password'
-  }
+  body: makeFakeAuthentication
 })
 
 const makeSut = (): SutType => {
@@ -91,7 +91,7 @@ describe('Login Controller', () => {
     const authSpy = jest.spyOn(authenticationStub, 'auth')
     await sut.handle(makeFakeRequest())
 
-    expect(authSpy).toHaveBeenCalledWith({ email: 'any_email@email.com', password: 'any_password' })
+    expect(authSpy).toHaveBeenCalledWith({ email: makeFakeAuthentication.email, password: makeFakeAuthentication.password })
   })
 
   it('should return 401 if Authentication returns null', async () => {

@@ -1,30 +1,20 @@
-import { SurveyModel } from '../../survey/load-surveys/db-load-surveys-protocols'
+import { SurveyModel } from '../load-surveys/db-load-surveys-protocols'
 import { DbLoadSurveyById } from './db-load-survey-by-id'
 import { LoadSuveyByIdRepository } from './db-load-survey-by-id-protocols'
+import { mockSurveyModel } from '@/__tests__/domain/mock-survey'
 
 type SutTypes = {
   sut: DbLoadSurveyById
   loadSurveyByIdRepositoryStub: LoadSuveyByIdRepository
 }
 
-const makeSurveyModel = (): SurveyModel => (
-  {
-    id: 'valid_id',
-    answers: [
-      {
-        answer: 'answer_1',
-      },
-    ],
-    date: new Date('2021-10-27T16:16:47.696Z'),
-    question: 'valid_question'
-  }
-)
+const makeFakeSurveyModel = mockSurveyModel()
 
 
 const makeLoadSurveyByIdRepositoryStub = (): LoadSuveyByIdRepository => {
   class LoadSurveyByIdRepositoryStub implements LoadSuveyByIdRepository {
     async loadById(id: string): Promise<SurveyModel> {
-      return makeSurveyModel()
+      return makeFakeSurveyModel
     }
   }
 
@@ -60,7 +50,7 @@ describe('DbLoadAccountById UseCase', () => {
   it('Should return a Survey on success', async () => {
     const { sut } = makeSut()
     const survey = await sut.loadById('valid_id')
-    expect(survey).toEqual(makeSurveyModel())
+    expect(survey).toEqual(makeFakeSurveyModel)
   })
 
 })

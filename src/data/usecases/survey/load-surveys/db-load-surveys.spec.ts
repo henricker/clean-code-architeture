@@ -1,33 +1,19 @@
 import { DbLoadSurveys } from './db-load-surveys'
 import { LoadSurveysRepository } from './db-load-surveys-protocols'
 import { SurveyModel } from '@/domain/models/Survey'
+import { mockSurveyModels } from '@/__tests__/domain/mock-survey'
 
 interface ISutTypes {
   sut: DbLoadSurveys
   loadSurveysRepositoryStub: LoadSurveysRepository
 }
 
-const makeSurveysModels = (): SurveyModel[] => ([
-  {
-    id: 'valid_id',
-    answers: [
-      {
-        answer: 'answer_1',
-      },
-      {
-        answer: 'answer_2',
-        image: 'image_url',
-      },
-    ],
-    date: new Date('2021-10-27T16:16:47.696Z'),
-    question: 'valid_question'
-  }
-])
+const makeFakeSurveysModels = mockSurveyModels()
 
 const makeLoadSurveyRepositoryStub = (): LoadSurveysRepository => {
   class LoadSurveyRepositoryStub implements LoadSurveysRepository {
     async loadAll(): Promise<SurveyModel[]> {
-      return makeSurveysModels()
+      return makeFakeSurveysModels
     }
   }
 
@@ -50,6 +36,7 @@ describe('DbLoadSurveys UseCase', () => {
     const { sut, loadSurveysRepositoryStub } = makeSut()
     const loadAllSpy = jest.spyOn(loadSurveysRepositoryStub, 'loadAll')
     await sut.load()
+    expect(loadAllSpy).toHaveBeenCalled()
   })
 
   it('Should throw if LoadSurveysRepository throws', async () => {
@@ -62,7 +49,7 @@ describe('DbLoadSurveys UseCase', () => {
   it('Should return surveys on success', async () => {
     const { sut } = makeSut()
     const surveys = await sut.load()
-    expect(surveys).toEqual(makeSurveysModels())
+    expect(surveys).toEqual(makeFakeSurveysModels)
   })
 
 })

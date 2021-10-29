@@ -11,6 +11,9 @@ import { ServerError } from '@/presentation/errors/server-error'
 import { badRequest, forbidden, ok, serverError } from '@/presentation/helpers/http/http-helper'
 import { Validation } from '@/presentation/protocols/validation'
 import { EmailInUseError } from '@/presentation/errors'
+import { mockAddAccountParams } from '@/__tests__/domain/mock-account'
+
+const makeFakeAccountParams = mockAddAccountParams()
 
 type SutTypes = {
   sut: SignUpController
@@ -21,18 +24,14 @@ type SutTypes = {
 
 const makeFakeRequest = (): HttpRequest => ({
   body: {
-    name: 'valid_name',
-    email: 'valid_email@email.com',
-    password: 'valid_password',
-    passwordConfirmation: 'valid_password'
+    ...makeFakeAccountParams,
+    passwordConfirmation: makeFakeAccountParams.password
   }
 })
 
 const makeFakeAccountModel = (): AccountModel => ({
   id: 'valid_id',
-  name: 'valid_name',
-  email: 'valid_email@email.com',
-  password: 'valid_password'
+  ...makeFakeAccountParams,
 })
 
 const makeAddAccount = (): AddAccount => {
@@ -111,11 +110,7 @@ describe('SignUp Controller', () => {
     const addSpy = jest.spyOn(addAccountStub, 'add')
 
     await sut.handle(makeFakeRequest())
-    expect(addSpy).toHaveBeenCalledWith({
-      email: "valid_email@email.com",
-      name: "valid_name",
-      password: "valid_password"
-    })
+    expect(addSpy).toHaveBeenCalledWith(makeFakeAccountParams)
   })
   
   it('should return 500 if addAccount throws', async () => {
@@ -149,7 +144,7 @@ describe('SignUp Controller', () => {
     const authSpy = jest.spyOn(authenticationStub, 'auth')
     await sut.handle(makeFakeRequest())
 
-    expect(authSpy).toHaveBeenCalledWith({ email: 'valid_email@email.com', password: 'valid_password' })
+    expect(authSpy).toHaveBeenCalledWith({ email: makeFakeAccountParams.email, password: makeFakeAccountParams.password })
   })
 
   it('should return 500 if Authentication throws', async () => {

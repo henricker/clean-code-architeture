@@ -1,7 +1,8 @@
 import env from '@/main/config/env'
 import { MongoHelper } from '@/infra/db/mongodb/helpers/mongo-helper'
 import app from '@/main/config/app'
-
+import { mockAddAccountParams } from '@/__tests__/domain/mock-account'
+import { mockSurveyModel } from '@/__tests__/domain/mock-survey'
 import { sign } from 'jsonwebtoken'
 import { Collection } from 'mongodb'
 import request from 'supertest'
@@ -9,12 +10,11 @@ import request from 'supertest'
 let surveyCollection: Collection
 let accountCollection: Collection
 
+const makeAddAccountParams = mockAddAccountParams()
+const makeAddSurveyParams = { ...mockSurveyModel(), id: undefined }
+
 const mockAccessToken = async (): Promise<string> => {
-  const res = await accountCollection.insertOne({
-    name: 'Rodrigo',
-    email: 'rodrigo.manguinho@gmail.com',
-    password: '123'
-  })
+  const res = await accountCollection.insertOne(makeAddAccountParams)
   const id = res.ops[0]._id
   const accessToken = sign({ id }, env.secret)
   await accountCollection.updateOne({
@@ -55,22 +55,13 @@ describe('Survey Routes', () => {
 
     it('Should return 200 on save survey result with accessToken', async () => {
       const accessToken = await mockAccessToken()
-      const res = await surveyCollection.insertOne({
-        question: 'Question',
-        answers: [{
-          answer: 'Answer 1',
-          image: 'http://image-name.com'
-        }, {
-          answer: 'Answer 2'
-        }],
-        date: new Date()
-      })
+      const res = await surveyCollection.insertOne(makeAddSurveyParams)
 
       await request(app)
         .put(`/api/surveys/${res.ops[0]._id.toHexString()}/results`)
         .set('x-access-token', accessToken)
         .send({
-          answer: 'Answer 1'
+          answer: makeAddSurveyParams.answers[0].answer
         })
         .expect(200)
     })

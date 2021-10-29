@@ -6,6 +6,11 @@ import { forbidden, ok, serverError } from "@/presentation/helpers/http/http-hel
 import { SaveSurveyResultController } from "./save-survey-result-controller"
 import { HttpRequest, LoadSurveyById, SaveSurveyResult } from "./save-survey-result-controller-protocols"
 import MockDate from 'mockdate'
+import { mockAccountModel } from "@/__tests__/domain/mock-account"
+import { mockSurveyModel } from "@/__tests__/domain/mock-survey"
+
+const makeFakeAccountModel = mockAccountModel()
+const makeFakeSurveyModel = mockSurveyModel()
 
 type SutTypes = {
   sut: SaveSurveyResultController
@@ -15,37 +20,27 @@ type SutTypes = {
 
 const makeHttpRequest = (): HttpRequest => ({
   params: {
-    surveyId: 'any_survey_id'
+    surveyId: makeFakeSurveyModel.id
   },
-  accountId: 'any_account_id',
+  accountId: makeFakeAccountModel.id,
   body: {
-    answer: 'valid_answer'
+    answer: makeFakeSurveyModel.answers[0].answer
   }
 })
 
-const makeFakeSurvey = (): SurveyModel => ({
-  id: 'any_survey_id',
-  answers: [
-    {
-      answer: 'valid_answer',
-    },
-  ],
-  date: new Date('2021-10-27T16:16:47.696Z'),
-  question: 'valid_question'
-})
 
 const makeFakeSurveyResult = (): SurveyResultModel => ({
-  accountId: 'any_account_id',
-  surveyId: 'any_survey_id',
-  answer: 'valid_answer',
+  accountId: makeFakeAccountModel.id,
+  surveyId: makeFakeSurveyModel.id,
+  answer: makeFakeSurveyModel.answers[0].answer,
   date: new Date('2021-10-27T16:16:47.696Z'),
-  id: 'valid_id' 
+  id: '3289127asdysd897812kj'
 })
 
 const makeLoadSurveyByIdStub = (): LoadSurveyById => {
   class LoadSurveyByIdStub implements LoadSurveyById {
     async loadById(id: string): Promise<SurveyModel> {
-      return makeFakeSurvey()
+      return makeFakeSurveyModel
     }
   }
 
@@ -88,7 +83,7 @@ describe('SaveSurveyResult Controller', () => {
     const { sut, loadSurveyByIdStub } = makeSut()
     const loadSpy  = jest.spyOn(loadSurveyByIdStub, 'loadById')
     await sut.handle(makeHttpRequest())
-    expect(loadSpy).toHaveBeenCalledWith('any_survey_id')
+    expect(loadSpy).toHaveBeenCalledWith(makeFakeSurveyModel.id)
   })
 
   it('Should return 403 if LoadSurveyById returns null', async () => {
@@ -116,10 +111,10 @@ describe('SaveSurveyResult Controller', () => {
     const saveSpy  = jest.spyOn(saveSurveyResultStub, 'save')
     await sut.handle(makeHttpRequest())
     expect(saveSpy).toHaveBeenCalledWith({
-      accountId: 'any_account_id',
-      surveyId: 'any_survey_id',
-      answer: 'valid_answer',
-      date: new Date('2021-10-27T16:16:47.696Z')
+      accountId: makeFakeAccountModel.id,
+      surveyId: makeFakeSurveyModel.id,
+      answer: makeFakeSurveyModel.answers[0].answer,
+      date: new Date('2021-10-27T16:16:47.696Z'),
     })
   })
 

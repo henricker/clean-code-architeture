@@ -1,34 +1,22 @@
 import app from '../config/app'
 import env from '../config/env'
-import { AddSurveyParams } from '@/domain/usecases/add-survey'
 import { MongoHelper } from '@/infra/db/mongodb/helpers/mongo-helper'
 import request from 'supertest'
 import { Collection } from 'mongodb'
 import { sign } from 'jsonwebtoken'
+import { mockAddSurveyParams } from '@/__tests__/domain/mock-survey'
+import { mockAddAccountParams } from '@/__tests__/domain/mock-account'
 
 
 let surveyCollection: Collection
 let accountCollection: Collection
 
-const makeFakeSurveyData = (): AddSurveyParams => ({
-  question: 'any_question',
-    answers: [
-      {
-        image: 'any_image',
-        answer: 'any_answer'
-      },
-      {
-        answer: 'other_answer'
-      }
-  ],
-  date: new Date('2021-10-27T16:16:47.696Z')
-})
+const makeFakeSurveyData = mockAddSurveyParams()
+const makeFakeAccountData = mockAddAccountParams()
 
 const makeAccessToken = async (): Promise<string> => {
   const res = await accountCollection.insertOne({
-    name: 'henricker',
-    email: 'henricker@email.com',
-    password: 'any_password',
+    ...makeFakeAccountData,
     role: 'admin'
   })
 
@@ -67,7 +55,7 @@ describe('Survey Routes', () => {
     it('should return 403 if no x-access-token provided', async () => {
       await request(app)
         .post('/api/surveys')
-        .send(makeFakeSurveyData())
+        .send(makeFakeSurveyData)
         .expect(403)
     })
 
@@ -76,7 +64,7 @@ describe('Survey Routes', () => {
       await request(app)
       .post('/api/surveys')
       .set('x-access-token', accessToken)
-      .send(makeFakeSurveyData())
+      .send(makeFakeSurveyData)
       .expect(204)
     })
   })

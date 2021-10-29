@@ -4,6 +4,9 @@ import { Validation } from '@/presentation/protocols/validation'
 import { badRequest, noContent, serverError } from '@/presentation/helpers/http/http-helper'
 import { AddSurveyParams } from '@/domain/usecases/add-survey'
 import MockDate from 'mockdate'
+import { mockAddSurveyParams } from '@/__tests__/domain/mock-survey'
+
+const makeFakeAddSurveyParams = mockAddSurveyParams()
 
 type SutTypes = {
   sut: AddSurveyController
@@ -12,13 +15,7 @@ type SutTypes = {
 }
 
 const makeFakeRequest = (): HttpRequest => ({
-  body: {
-    question: 'any_question',
-    answers: [{
-      image: 'any_image',
-      answer: 'any_answer'
-    }]
-  }
+  body: makeFakeAddSurveyParams
 })
 
 const makeValidationStub = (): Validation => {

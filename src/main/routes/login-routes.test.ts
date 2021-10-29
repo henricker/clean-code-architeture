@@ -1,9 +1,12 @@
 import app from '../config/app'
 import env from '../config/env'
 import { MongoHelper } from '@/infra/db/mongodb/helpers/mongo-helper'
+import { mockAddAccountParams } from '@/__tests__/domain/mock-account'
 import bcrypt from 'bcrypt'
 import request from 'supertest'
 import { Collection } from 'mongodb'
+
+const makeAddAccountParams = mockAddAccountParams()
 
 let accountCollection: Collection
 describe('Login Routes', () => {
@@ -26,10 +29,8 @@ describe('Login Routes', () => {
       const response = await request(app)
         .post('/api/signup')
         .send({
-          name: 'henricker',
-          email: 'henricker@email.com',
-          password: 'MyHardPassword12301293012398@@@@1!2371739',
-          passwordConfirmation: 'MyHardPassword12301293012398@@@@1!2371739'
+          ...makeAddAccountParams,
+          passwordConfirmation: makeAddAccountParams.password,
         })
         .expect(200)
     })
@@ -37,18 +38,17 @@ describe('Login Routes', () => {
 
   describe('POST /login', () => {
     it('should return 200 on login', async () => {
-      const password = await bcrypt.hash('MyHardPassword12301293012398', 12)
+      const password = await bcrypt.hash(makeAddAccountParams.password, 12)
       await accountCollection.insertOne({
-        name: 'henricker',
-        email: 'henricker@email.com',
+        ...makeAddAccountParams,
         password
       })
 
       await request(app)
         .post('/api/login')
         .send({
-          email: 'henricker@email.com',
-          password: 'MyHardPassword12301293012398'
+          email: makeAddAccountParams.email,
+          password: makeAddAccountParams.password
         })
         .expect(200)
        
