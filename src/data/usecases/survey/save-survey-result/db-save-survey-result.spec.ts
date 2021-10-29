@@ -1,4 +1,4 @@
-import { SaveSurveyResultRepository, SaveSurveyResultModel, SurveyResultModel } from './db-save-survey-result-protocols'
+import { SaveSurveyResultRepository, SaveSurveyResultParams, SurveyResultModel } from './db-save-survey-result-protocols'
 import { DbSaveSurveyResult } from './db-save-survey-result'
 
 type SutTypes = {
@@ -14,7 +14,7 @@ const makeSurveyResultModel = (): SurveyResultModel => ({
   surveyId: 'valid_survey_id'
 })
 
-const makeSaveSurveyResultModel = (): SaveSurveyResultModel => ({
+const makeSaveSurveyResultParams = (): SaveSurveyResultParams => ({
   accountId: 'valid_account_id',
   answer: 'valid_answer',
   date: new Date('2021-10-27T16:16:47.696Z'),
@@ -24,7 +24,7 @@ const makeSaveSurveyResultModel = (): SaveSurveyResultModel => ({
 
 const makeSaveSurveyResultRepositoryStub = (): SaveSurveyResultRepository => {
   class SaveSurveyResultRepositoryStub implements SaveSurveyResultRepository {
-    async save(data: SaveSurveyResultModel): Promise<SurveyResultModel> {
+    async save(data: SaveSurveyResultParams): Promise<SurveyResultModel> {
       return makeSurveyResultModel()
     }
   }
@@ -47,20 +47,20 @@ describe('DbSaveSurveyResult UseCase', () => {
   it('Should call SaveSurveyResultRepository with correct values', async () => {
     const { sut, saveSurveyResultRepositoryStub } = makeSut()
     const saveSpy = jest.spyOn(saveSurveyResultRepositoryStub, 'save')
-    await sut.save(makeSaveSurveyResultModel())
-    expect(saveSpy).toHaveBeenCalledWith(makeSaveSurveyResultModel())
+    await sut.save(makeSaveSurveyResultParams())
+    expect(saveSpy).toHaveBeenCalledWith(makeSaveSurveyResultParams())
   })
 
   it('Should throw if SaveSurveyResultRepository throws', async () => {
     const { sut, saveSurveyResultRepositoryStub } = makeSut()
     jest.spyOn(saveSurveyResultRepositoryStub, 'save').mockRejectedValueOnce(new Error())
-    const promise = sut.save(makeSaveSurveyResultModel())
+    const promise = sut.save(makeSaveSurveyResultParams())
     await expect(promise).rejects.toThrow()
   })
 
   it('Should return SurveyResult on success', async () => {
     const { sut } = makeSut()
-    const surveyResult = await sut.save(makeSaveSurveyResultModel())
+    const surveyResult = await sut.save(makeSaveSurveyResultParams())
     expect(surveyResult).toEqual(makeSurveyResultModel())
   })
 

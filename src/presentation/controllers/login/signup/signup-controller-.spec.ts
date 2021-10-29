@@ -2,10 +2,10 @@ import { SignUpController } from './signup-controller'
 import { 
   AccountModel,
   AddAccount, 
-  AddAccountModel,
+  AddAccountParams,
   HttpRequest, 
   Authentication,
-  AuthenticationModel
+  AuthenticationParams
   } from './signup-controller-protocols'
 import { ServerError } from '@/presentation/errors/server-error'
 import { badRequest, forbidden, ok, serverError } from '@/presentation/helpers/http/http-helper'
@@ -37,7 +37,7 @@ const makeFakeAccountModel = (): AccountModel => ({
 
 const makeAddAccount = (): AddAccount => {
   class AddAccountStub implements AddAccount {
-    async add(account: AddAccountModel): Promise<AccountModel> {
+    async add(account: AddAccountParams): Promise<AccountModel> {
       return new Promise(resolve => resolve(makeFakeAccountModel()))
     }
   }
@@ -48,7 +48,7 @@ const makeAddAccount = (): AddAccount => {
 
 const makeAuthenticatioStub = (): Authentication => {
   class AuthenticationStub implements Authentication {
-    async auth(authentication: AuthenticationModel): Promise<string> {
+    async auth(authentication: AuthenticationParams): Promise<string> {
       return 'any_token'
     }
   }

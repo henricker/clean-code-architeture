@@ -1,6 +1,6 @@
 import app from '../config/app'
 import env from '../config/env'
-import { AddSurveyModel } from '@/domain/usecases/add-survey'
+import { AddSurveyParams } from '@/domain/usecases/add-survey'
 import { MongoHelper } from '@/infra/db/mongodb/helpers/mongo-helper'
 import request from 'supertest'
 import { Collection } from 'mongodb'
@@ -10,7 +10,7 @@ import { sign } from 'jsonwebtoken'
 let surveyCollection: Collection
 let accountCollection: Collection
 
-const makeFakeSurveyData = (): AddSurveyModel => ({
+const makeFakeSurveyData = (): AddSurveyParams => ({
   question: 'any_question',
     answers: [
       {

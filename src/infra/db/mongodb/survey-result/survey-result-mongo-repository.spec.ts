@@ -2,7 +2,7 @@ import { SurveyResultMongoRepository } from './survey-result-mongo-repository'
 import { MongoHelper } from '../helpers/mongo-helper'
 import { Collection } from 'mongodb'
 import { SurveyModel } from '@/domain/models/Survey'
-import { SaveSurveyResultModel } from '@/domain/usecases/save-survey-result'
+import { SaveSurveyResultParams } from '@/domain/usecases/save-survey-result'
 import { AccountModel } from '@/domain/models/Account'
 
 let surveyCollection: Collection

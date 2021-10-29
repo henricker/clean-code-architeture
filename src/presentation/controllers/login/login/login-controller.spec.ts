@@ -1,7 +1,7 @@
 import { LoginController } from './login-controller'
 import { 
   Authentication, 
-  AuthenticationModel, 
+  AuthenticationParams, 
   HttpRequest, 
 } from './login-controller-protocols'
 import { badRequest, ok, serverError, unauthorized } from '@/presentation/helpers/http/http-helper'
@@ -16,7 +16,7 @@ type SutType = {
 
 const makeAuthentication = (): Authentication => {
   class AuthenticationStub implements Authentication {
-    async auth(authentication: AuthenticationModel): Promise<string> {
+    async auth(authentication: AuthenticationParams): Promise<string> {
       return 'any_token'
     }
   }
