@@ -38,6 +38,6 @@ export const mockEmptySurveyResultModel = (): SurveyResultModel => ({
     image: faker.image.imageUrl(),
     count: 0,
     percent: 0,
-  }],
+  },],
   date: faker.date.recent()
 })

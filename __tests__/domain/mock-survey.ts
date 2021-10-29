@@ -12,6 +12,9 @@ export const mockSurveyModel = (): SurveyModel => {
     }, {
       answer: faker.random.word(),
       image: faker.image.imageUrl()
+    }, {
+      answer: faker.random.word(),
+      image: faker.image.imageUrl()
     }],
     date: faker.date.recent()
   }
@@ -29,6 +32,9 @@ export const mockAddSurveyParams = (): AddSurveyParams => ({
     answer: faker.random.word()
   }, {
     answer: faker.random.word()
+  }, {
+    answer: faker.random.word(),
+    image: faker.image.imageUrl()
   }],
   date: faker.date.recent()
 })
